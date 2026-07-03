@@ -1,4 +1,4 @@
-
+import time
 
 from flow import Flow
 from feature_extractor import FeatureExtractor
@@ -12,8 +12,12 @@ flow = Flow(
 )
 
 flow.add_packet(120)
+time.sleep(1)      # Wait 1 second
 flow.add_packet(80)
+time.sleep(2)      # Wait 2 seconds
+
 flow.add_packet(200)
+
 
 extractor = FeatureExtractor()
 

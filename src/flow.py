@@ -127,59 +127,35 @@ class Flow:
         return {
 
             "src_ip": self.src_ip,
-            "dst_ip": self.dst_ip,
-            "src_port": self.src_port,
-            "dst_port": self.dst_port,
-            "protocol": self.protocol,
+    "dst_ip": self.dst_ip,
+    "src_port": self.src_port,
+    "dst_port": self.dst_port,
+    "protocol": self.protocol,
 
-            "packet_count": self.packet_count,
-            "total_bytes": self.total_bytes,
-            "duration": round(self.get_duration(), 6),
+    "packet_count": self.packet_count,
+    "total_bytes": self.total_bytes,
+    "duration": round(self.get_duration(), 6),
 
-            "forward_packets": self.forward_packets,
-            "backward_packets": self.backward_packets,
+    "forward_packets": self.forward_packets,
+    "backward_packets": self.backward_packets,
 
-            "forward_bytes": self.forward_bytes,
-            "backward_bytes": self.backward_bytes,
+    "forward_bytes": self.forward_bytes,
+    "backward_bytes": self.backward_bytes,
 
-            "packet_sizes": self.packet_sizes,
+    "packet_sizes": self.packet_sizes,
 
-            "forward_packet_sizes": self.forward_packet_sizes,
-            "backward_packet_sizes": self.backward_packet_sizes,
+    "forward_packet_sizes": self.forward_packet_sizes,
+    "backward_packet_sizes": self.backward_packet_sizes,
 
-            "syn_count": self.syn_count,
-            "ack_count": self.ack_count,
-            "fin_count": self.fin_count,
-            "rst_count": self.rst_count,
-            "psh_count": self.psh_count,
-            "urg_count": self.urg_count
-        }
+    # NEW
+    "packet_times": self.packet_times,
+    "forward_times": self.forward_times,
+    "backward_times": self.backward_times,
 
-        return {
-
-            "src_ip": self.src_ip,
-            "dst_ip": self.dst_ip,
-
-            "src_port": self.src_port,
-            "dst_port": self.dst_port,
-
-            "protocol": self.protocol,
-
-            "packet_count": self.packet_count,
-
-            "total_bytes": self.total_bytes,
-
-            "duration": self.duration(),
-
-            "packet_sizes": self.packet_sizes,
-
-            "syn_count": self.syn_count,
-
-            "ack_count": self.ack_count,
-
-            "fin_count": self.fin_count,
-
-            "rst_count": self.rst_count,
-
-            "psh_count": self.psh_count
-        }
+    "syn_count": self.syn_count,
+    "ack_count": self.ack_count,
+    "fin_count": self.fin_count,
+    "rst_count": self.rst_count,
+    "psh_count": self.psh_count,
+    "urg_count": self.urg_count
+}
