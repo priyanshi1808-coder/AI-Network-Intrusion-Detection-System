@@ -34,12 +34,19 @@ class FlowManager:
                 dst_port,
                 protocol
             )
-        self.flows[flow_key].update(packet_size)
+        self.flows[flow_key].add_packet(
+    packet_size=packet_size,
+    direction="forward",
+    tcp_flags=None,
+    header_length=20
+)
     def get_all_flows(self):
         """
         Return all active flows.
         """
         return self.flows
+    
+    
         
         
 

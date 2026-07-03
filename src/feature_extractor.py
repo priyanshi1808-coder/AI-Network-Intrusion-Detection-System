@@ -1,45 +1,147 @@
 import statistics
 
+
 class FeatureExtractor:
+
     def extract(self, flow):
-        packet_sizes = flow["packet_sizes"]
-        
+
         features = {}
-        
-        # Basic Flow features
-        
-        features["flow_duration"] = flow["duration"]
-        features["packet_count"] = flow["packet_count"]
-        features["total_bytes"] = flow["total_bytes"]
-        
-        # Average Packet Size
-        if flow["packet_count"] > 0:
-            features["avg_packet_size"] = (
-                flow["total_bytes"] / flow["packet_count"]
+
+        duration = flow["duration"]
+
+        if duration <= 0:
+            duration = 0.000001
+
+        # ===============================
+        # Flow Features
+        # ===============================
+
+        features["Flow Duration"] = flow["duration"]
+
+        features["Total Fwd Packets"] = flow["forward_packets"]
+
+        features["Total Backward Packets"] = flow["backward_packets"]
+
+        features["Total Length of Fwd Packets"] = flow["forward_bytes"]
+
+        features["Total Length of Bwd Packets"] = flow["backward_bytes"]
+
+        # ===============================
+        # Flow Speed
+        # ===============================
+
+        features["Flow Bytes/s"] = (
+            flow["total_bytes"] / duration
+        )
+
+        features["Flow Packets/s"] = (
+            flow["packet_count"] / duration
+        )
+
+        # ===============================
+        # Forward Packet Statistics
+        # ===============================
+
+        fwd = flow["forward_packet_sizes"]
+
+        if len(fwd) > 0:
+
+            features["Fwd Packet Length Max"] = max(fwd)
+            features["Fwd Packet Length Min"] = min(fwd)
+            features["Fwd Packet Length Mean"] = statistics.mean(fwd)
+
+            if len(fwd) > 1:
+                features["Fwd Packet Length Std"] = statistics.stdev(fwd)
+            else:
+                features["Fwd Packet Length Std"] = 0
+
+        else:
+
+            features["Fwd Packet Length Max"] = 0
+            features["Fwd Packet Length Min"] = 0
+            features["Fwd Packet Length Mean"] = 0
+            features["Fwd Packet Length Std"] = 0
+
+        # ===============================
+        # Backward Packet Statistics
+        # ===============================
+
+        bwd = flow["backward_packet_sizes"]
+
+        if len(bwd) > 0:
+
+            features["Bwd Packet Length Max"] = max(bwd)
+            features["Bwd Packet Length Min"] = min(bwd)
+            features["Bwd Packet Length Mean"] = statistics.mean(bwd)
+
+            if len(bwd) > 1:
+                features["Bwd Packet Length Std"] = statistics.stdev(bwd)
+            else:
+                features["Bwd Packet Length Std"] = 0
+
+        else:
+
+            features["Bwd Packet Length Max"] = 0
+            features["Bwd Packet Length Min"] = 0
+            features["Bwd Packet Length Mean"] = 0
+            features["Bwd Packet Length Std"] = 0
+
+        # ===============================
+        # Overall Packet Statistics
+        # ===============================
+
+        packets = flow["packet_sizes"]
+
+        if len(packets) > 0:
+
+            features["Min Packet Length"] = min(packets)
+
+            features["Max Packet Length"] = max(packets)
+
+            features["Packet Length Mean"] = statistics.mean(packets)
+
+            if len(packets) > 1:
+
+                features["Packet Length Std"] = statistics.stdev(packets)
+
+                features["Packet Length Variance"] = statistics.variance(
+                    packets
+                )
+
+            else:
+
+                features["Packet Length Std"] = 0
+
+                features["Packet Length Variance"] = 0
+
+            features["Average Packet Size"] = (
+                flow["total_bytes"] /
+                flow["packet_count"]
             )
-        else:
-            features["avg_packet_size"] = 0
 
-        # Bytes per second
-        
-        if flow["duration"] > 0:
-            features["flow_bytes_per_sec"] = flow["total_bytes"] / flow["duration"]
-            features["flow_packets_per_sec"] = flow["packet_count"] / flow["duration"]
-            
         else:
-            features["flow_packets_per_sec"] = 0
-            
-        # Packet Statistics
-        features["min_packet_size"] = min(packet_sizes)
-        features["max_packet_size"] = max(packet_sizes)
-        features["mean_packet_size"] = statistics.mean(packet_sizes)
 
-        if len(packet_sizes) > 1:
-            features["std_packet_size"] = statistics.stdev(packet_sizes)
-        else:
-            features["std_packet_size"] = 0
+            features["Min Packet Length"] = 0
+            features["Max Packet Length"] = 0
+            features["Packet Length Mean"] = 0
+            features["Packet Length Std"] = 0
+            features["Packet Length Variance"] = 0
+            features["Average Packet Size"] = 0
+
+        # ===============================
+        # TCP Flags
+        # ===============================
+
+        features["FIN Flag Count"] = flow["fin_count"]
+
+        features["SYN Flag Count"] = flow["syn_count"]
+
+        features["RST Flag Count"] = flow["rst_count"]
+
+        features["PSH Flag Count"] = flow["psh_count"]
+
+        features["ACK Flag Count"] = flow["ack_count"]
+
+        features["URG Flag Count"] = flow["urg_count"]
 
         return features
-            
-        
-    
