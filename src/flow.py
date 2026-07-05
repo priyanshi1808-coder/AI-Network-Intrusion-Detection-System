@@ -35,6 +35,10 @@ class Flow:
         self.packet_times = []
         self.forward_times = []
         self.backward_times = []
+        
+        # Active / Idle Times
+        self.active_times = []
+        self.idle_times = []
 
         # TCP Flag Counters
         self.syn_count = 0
@@ -64,6 +68,16 @@ class Flow:
         self.total_bytes += packet_size
 
         self.packet_sizes.append(packet_size)
+        
+        # Calculate Active / Idle gap
+        if len(self.packet_times) > 0:
+
+            gap = now - self.packet_times[-1]
+
+            if gap > 1:
+                self.idle_times.append(gap)
+            else:
+                self.active_times.append(gap)
 
         self.packet_times.append(now)
 
@@ -154,6 +168,9 @@ class Flow:
     "packet_times": self.packet_times,
     "forward_times": self.forward_times,
     "backward_times": self.backward_times,
+    
+    "active_times": self.active_times,
+    "idle_times": self.idle_times,
 
     "syn_count": self.syn_count,
     "ack_count": self.ack_count,

@@ -27,6 +27,27 @@ def calculate_iat(times):
         max(iats),
         min(iats)
     )
+def calculate_stats(values):
+    """
+    Calculate Mean, Std, Max and Min.
+    """
+
+    if len(values) == 0:
+        return 0, 0, 0, 0
+
+    mean = statistics.mean(values)
+
+    if len(values) > 1:
+        std = statistics.stdev(values)
+    else:
+        std = 0
+
+    return (
+    mean,
+    std,
+    max(values),
+    min(values)
+)
 
 
 class FeatureExtractor:
@@ -264,4 +285,27 @@ class FeatureExtractor:
             )
         else:
             features["Down/Up Ratio"] = 0
+            
+        # ===============================
+        # Active / Idle Features
+        # ===============================
+
+        active_mean, active_std, active_max, active_min = calculate_stats(
+            flow["active_times"]
+        )
+
+        features["Active Mean"] = active_mean
+        features["Active Std"] = active_std
+        features["Active Max"] = active_max
+        features["Active Min"] = active_min
+
+        idle_mean, idle_std, idle_max, idle_min = calculate_stats(
+            flow["idle_times"]
+        )
+
+        features["Idle Mean"] = idle_mean
+        features["Idle Std"] = idle_std
+        features["Idle Max"] = idle_max
+        features["Idle Min"] = idle_min
+            
         return features
