@@ -21,6 +21,14 @@ time.sleep(2)
 
 flow.add_packet(200, header_length=20)
 
+time.sleep(1)
+
+flow.add_packet(
+    150,
+    direction="backward",
+    header_length=20
+)
+
 
 extractor = FeatureExtractor()
 
