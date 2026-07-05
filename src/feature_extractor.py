@@ -233,4 +233,35 @@ class FeatureExtractor:
         features["Bwd IAT Max"] = bwd_max
         features["Bwd IAT Min"] = bwd_min
 
+        # ===============================
+        # Subflow Features
+        # ===============================
+    
+        features["Subflow Fwd Packets"] = flow["forward_packets"]
+        features["Subflow Fwd Bytes"] = flow["forward_bytes"]
+
+        features["Subflow Bwd Packets"] = flow["backward_packets"]
+        features["Subflow Bwd Bytes"] = flow["backward_bytes"]
+        
+        # =============================
+        # Packet Rate Features
+        # =============================
+        features["Fwd Packets/s"] = (
+            flow["forward_packets"] / duration
+        )
+
+        features["Bwd Packets/s"] = (
+            flow["backward_packets"] / duration
+        )
+        
+        # =============================
+        # Down/Up Ratio
+        # =============================
+        if flow["forward_packets"] > 0:
+            features["Down/Up Ratio"] = (
+                flow["backward_packets"] /
+                flow["forward_packets"]
+            )
+        else:
+            features["Down/Up Ratio"] = 0
         return features
