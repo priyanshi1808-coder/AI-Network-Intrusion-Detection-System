@@ -11,12 +11,15 @@ flow = Flow(
     "TCP"
 )
 
-flow.add_packet(120)
-time.sleep(1)      # Wait 1 second
-flow.add_packet(80)
-time.sleep(2)      # Wait 2 seconds
+flow.add_packet(120, header_length=20)
 
-flow.add_packet(200)
+time.sleep(1)
+
+flow.add_packet(80, header_length=20)
+
+time.sleep(2)
+
+flow.add_packet(200, header_length=20)
 
 
 extractor = FeatureExtractor()

@@ -146,6 +146,9 @@ class Flow:
 
     "forward_packet_sizes": self.forward_packet_sizes,
     "backward_packet_sizes": self.backward_packet_sizes,
+    
+    "forward_header_lengths": self.forward_header_lengths,
+    "backward_header_lengths": self.backward_header_lengths,
 
     # NEW
     "packet_times": self.packet_times,

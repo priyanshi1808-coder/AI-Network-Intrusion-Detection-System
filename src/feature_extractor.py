@@ -1,4 +1,5 @@
 import statistics
+
 def calculate_iat(times):
     """
     Calculate Inter Arrival Time statistics.
@@ -114,6 +115,29 @@ class FeatureExtractor:
             features["Bwd Packet Length Std"] = 0
 
         # ===============================
+        # Header Length Features
+        # ===============================
+
+        features["Fwd Header Length"] = sum(
+           flow["forward_header_lengths"]
+        )
+
+        features["Bwd Header Length"] = sum(
+           flow["backward_header_lengths"]
+        )
+    
+
+        # CICIDS has this duplicate column
+        features["Fwd Header Length.1"] = features["Fwd Header Length"]
+        # ===============================
+        
+        # ===============================
+        # Destination Port
+        # ===============================
+
+        features["Destination Port"] = flow["dst_port"]
+        
+        # ==============================
         # Overall Packet Statistics
         # ===============================
 
@@ -155,21 +179,6 @@ class FeatureExtractor:
             features["Packet Length Variance"] = 0
             features["Average Packet Size"] = 0
 
-        # ===============================
-        # TCP Flags
-        # ===============================
-
-        features["FIN Flag Count"] = flow["fin_count"]
-
-        features["SYN Flag Count"] = flow["syn_count"]
-
-        features["RST Flag Count"] = flow["rst_count"]
-
-        features["PSH Flag Count"] = flow["psh_count"]
-
-        features["ACK Flag Count"] = flow["ack_count"]
-
-        features["URG Flag Count"] = flow["urg_count"]
         
         # ===============================
         # TCP Flags
@@ -187,7 +196,7 @@ class FeatureExtractor:
         # ===============================
 
         flow_total, flow_mean, flow_std, flow_max, flow_min = calculate_iat(
-        flow["packet_times"]
+            flow["packet_times"]
     )
 
         features["Flow IAT Total"] = flow_total
@@ -201,7 +210,7 @@ class FeatureExtractor:
         # ===============================
 
         fwd_total, fwd_mean, fwd_std, fwd_max, fwd_min = calculate_iat(
-        flow["forward_times"]
+            flow["forward_times"]
     )
 
         features["Fwd IAT Total"] = fwd_total
@@ -215,7 +224,7 @@ class FeatureExtractor:
         # ===============================
 
         bwd_total, bwd_mean, bwd_std, bwd_max, bwd_min = calculate_iat(
-        flow["backward_times"]
+            flow["backward_times"]
     )
 
         features["Bwd IAT Total"] = bwd_total
@@ -223,6 +232,5 @@ class FeatureExtractor:
         features["Bwd IAT Std"] = bwd_std
         features["Bwd IAT Max"] = bwd_max
         features["Bwd IAT Min"] = bwd_min
-
 
         return features
