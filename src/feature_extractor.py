@@ -295,6 +295,18 @@ class FeatureExtractor:
             features["Flow Packet Length Std"] = 0
             features["Flow Packet Length Variance"] = 0
             
+        # ===============================
+        # Packet Length Coefficient of Variation
+        # ===============================
+
+        if features["Flow Packet Length Mean"] > 0:
+            features["Packet Length CV"] = (
+               features["Flow Packet Length Std"] /
+               features["Flow Packet Length Mean"]
+           )
+        else:
+            features["Packet Length CV"] = 0
+            
             
         # ===============================
         # Flow Byte Ratio Features
