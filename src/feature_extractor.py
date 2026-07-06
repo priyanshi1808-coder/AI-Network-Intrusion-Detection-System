@@ -1,4 +1,5 @@
 import statistics
+from scipy.stats import skew
 
 def calculate_iat(times):
     """
@@ -218,6 +219,16 @@ class FeatureExtractor:
             )
         else:
             features["Packet Length Range"] = 0
+            
+        # ===============================
+        # Packet Length Skewness
+        # ===============================
+
+        if len(packets) > 2:
+            features["Packet Length Skewness"] = float(skew(packets))
+        else:
+            features["Packet Length Skewness"] = 0
+            
         
         # ===============================
         # TCP Flags
