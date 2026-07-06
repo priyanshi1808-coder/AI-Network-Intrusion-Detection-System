@@ -249,6 +249,29 @@ class FeatureExtractor:
             )
         else:
             features["Avg Bwd Segment Size"] = 0
+            
+        # ===============================
+        # Flow Packet Length Statistics
+        # ===============================
+
+        if len(packets) > 0:
+
+            features["Flow Packet Length Mean"] = statistics.mean(packets)
+
+            if len(packets) > 1:
+                features["Flow Packet Length Std"] = statistics.stdev(packets)
+                features["Flow Packet Length Variance"] = statistics.variance(
+                    packets
+              )
+            else:
+                features["Flow Packet Length Std"] = 0
+                features["Flow Packet Length Variance"] = 0
+
+        else:
+
+            features["Flow Packet Length Mean"] = 0
+            features["Flow Packet Length Std"] = 0
+            features["Flow Packet Length Variance"] = 0
 
         # ===============================
         # Flow IAT Features
