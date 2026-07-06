@@ -272,6 +272,28 @@ class FeatureExtractor:
             features["Flow Packet Length Mean"] = 0
             features["Flow Packet Length Std"] = 0
             features["Flow Packet Length Variance"] = 0
+            
+            
+        # ===============================
+        # Flow Byte Ratio Features
+        # ===============================
+
+        if flow["total_bytes"] > 0:
+
+            features["Fwd Byte Ratio"] = (
+                flow["forward_bytes"] /
+                flow["total_bytes"]
+            )
+
+            features["Bwd Byte Ratio"] = (
+                flow["backward_bytes"] /
+                flow["total_bytes"]
+            )
+
+        else:
+
+            features["Fwd Byte Ratio"] = 0
+            features["Bwd Byte Ratio"] = 0
 
         # ===============================
         # Flow IAT Features
