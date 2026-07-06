@@ -6,7 +6,7 @@ def calculate_iat(times):
     """
 
     if len(times) < 2:
-        return 0, 0, 0, 0, 0
+        return 0, 0, 0, 0, 0, 0
 
     iats = []
 
@@ -17,13 +17,16 @@ def calculate_iat(times):
 
     if len(iats) > 1:
         std = statistics.stdev(iats)
+        var = statistics.variance(iats)
     else:
         std = 0
+        var = 0
 
     return (
         sum(iats),
         mean,
         std,
+        var,
         max(iats),
         min(iats)
     )
@@ -216,13 +219,14 @@ class FeatureExtractor:
         # Flow IAT Features
         # ===============================
 
-        flow_total, flow_mean, flow_std, flow_max, flow_min = calculate_iat(
+        flow_total, flow_mean, flow_std, flow_var, flow_max, flow_min = calculate_iat(
             flow["packet_times"]
     )
 
         features["Flow IAT Total"] = flow_total
         features["Flow IAT Mean"] = flow_mean
         features["Flow IAT Std"] = flow_std
+        features["Flow IAT Variance"] = flow_var
         features["Flow IAT Max"] = flow_max
         features["Flow IAT Min"] = flow_min
 
@@ -230,13 +234,14 @@ class FeatureExtractor:
         # Forward IAT Features
         # ===============================
 
-        fwd_total, fwd_mean, fwd_std, fwd_max, fwd_min = calculate_iat(
+        fwd_total, fwd_mean, fwd_std, fwd_var, fwd_max, fwd_min = calculate_iat(
             flow["forward_times"]
     )
 
         features["Fwd IAT Total"] = fwd_total
         features["Fwd IAT Mean"] = fwd_mean
         features["Fwd IAT Std"] = fwd_std
+        features["Fwd IAT Variance"] = fwd_var
         features["Fwd IAT Max"] = fwd_max
         features["Fwd IAT Min"] = fwd_min
 
@@ -244,13 +249,14 @@ class FeatureExtractor:
         # Backward IAT Features
         # ===============================
 
-        bwd_total, bwd_mean, bwd_std, bwd_max, bwd_min = calculate_iat(
+        bwd_total, bwd_mean, bwd_std, bwd_var, bwd_max, bwd_min = calculate_iat(
             flow["backward_times"]
     )
 
         features["Bwd IAT Total"] = bwd_total
         features["Bwd IAT Mean"] = bwd_mean
         features["Bwd IAT Std"] = bwd_std
+        features["Bwd IAT Variance"] = bwd_var
         features["Bwd IAT Max"] = bwd_max
         features["Bwd IAT Min"] = bwd_min
 
