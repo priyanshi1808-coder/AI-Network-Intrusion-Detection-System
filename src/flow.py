@@ -39,6 +39,15 @@ class Flow:
         # Active / Idle Times
         self.active_times = []
         self.idle_times = []
+        
+        # Bulk Transfer Statistics
+        self.fwd_bulk_packets = 0
+        self.fwd_bulk_bytes = 0
+        self.fwd_bulk_rate = 0
+
+        self.bwd_bulk_packets = 0
+        self.bwd_bulk_bytes = 0
+        self.bwd_bulk_rate = 0
 
         # TCP Flag Counters
         self.syn_count = 0
@@ -106,6 +115,7 @@ class Flow:
             self.backward_times.append(now)
 
             self.backward_header_lengths.append(header_length)
+            
 
         # TCP Flags
         if tcp_flags:
@@ -171,6 +181,14 @@ class Flow:
     
     "active_times": self.active_times,
     "idle_times": self.idle_times,
+    
+    "fwd_bulk_packets": self.fwd_bulk_packets,
+    "fwd_bulk_bytes": self.fwd_bulk_bytes,
+    "fwd_bulk_rate": self.fwd_bulk_rate,
+
+    "bwd_bulk_packets": self.bwd_bulk_packets,
+    "bwd_bulk_bytes": self.bwd_bulk_bytes,
+    "bwd_bulk_rate": self.bwd_bulk_rate,
 
     "syn_count": self.syn_count,
     "ack_count": self.ack_count,

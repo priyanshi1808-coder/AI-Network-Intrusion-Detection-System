@@ -313,5 +313,17 @@ class FeatureExtractor:
         features["Idle Std"] = idle_std
         features["Idle Max"] = idle_max
         features["Idle Min"] = idle_min
+        
+        # ===============================
+        # Bulk Transfer Features
+        # ===============================
+
+        features["Fwd Avg Bytes/Bulk"] = flow["fwd_bulk_bytes"]
+        features["Fwd Avg Packets/Bulk"] = flow["fwd_bulk_packets"]
+        features["Fwd Avg Bulk Rate"] = flow["fwd_bulk_rate"]
+
+        features["Bwd Avg Bytes/Bulk"] = flow["bwd_bulk_bytes"]
+        features["Bwd Avg Packets/Bulk"] = flow["bwd_bulk_packets"]
+        features["Bwd Avg Bulk Rate"] = flow["bwd_bulk_rate"]
             
         return features
