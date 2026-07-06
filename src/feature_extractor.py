@@ -229,6 +229,26 @@ class FeatureExtractor:
         features["PSH Flag Count"] = flow["psh_count"]
         features["ACK Flag Count"] = flow["ack_count"]
         features["URG Flag Count"] = flow["urg_count"]
+        
+        # ===============================
+        # Segment Size Features
+        # ===============================
+
+        if flow["forward_packets"] > 0:
+            features["Avg Fwd Segment Size"] = (
+                flow["forward_bytes"] /
+                flow["forward_packets"]
+    )
+        else:
+            features["Avg Fwd Segment Size"] = 0
+
+        if flow["backward_packets"] > 0:
+            features["Avg Bwd Segment Size"] = (
+                flow["backward_bytes"] /
+                flow["backward_packets"]
+            )
+        else:
+            features["Avg Bwd Segment Size"] = 0
 
         # ===============================
         # Flow IAT Features
