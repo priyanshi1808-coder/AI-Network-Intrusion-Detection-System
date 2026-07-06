@@ -203,6 +203,21 @@ class FeatureExtractor:
             features["Packet Length Variance"] = 0
             features["Average Packet Size"] = 0
 
+        # ===============================
+        # Packet Length Distribution
+        # ===============================
+
+        if len(packets) > 1:
+            features["Packet Length Median"] = statistics.median(packets)
+        else:
+            features["Packet Length Median"] = 0
+
+        if len(packets) > 0:
+            features["Packet Length Range"] = (
+                max(packets) - min(packets)
+            )
+        else:
+            features["Packet Length Range"] = 0
         
         # ===============================
         # TCP Flags
