@@ -1,5 +1,5 @@
 import statistics
-from scipy.stats import skew
+from scipy.stats import skew, kurtosis
 
 def calculate_iat(times):
     """
@@ -228,6 +228,17 @@ class FeatureExtractor:
             features["Packet Length Skewness"] = float(skew(packets))
         else:
             features["Packet Length Skewness"] = 0
+            
+        # ===============================
+        # Packet Length Kurtosis
+        # ===============================
+
+        if len(packets) > 3:
+            features["Packet Length Kurtosis"] = float(
+               kurtosis(packets)
+            )
+        else:
+            features["Packet Length Kurtosis"] = 0
             
         
         # ===============================
