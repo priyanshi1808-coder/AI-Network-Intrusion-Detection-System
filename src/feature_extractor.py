@@ -294,6 +294,29 @@ class FeatureExtractor:
 
             features["Fwd Byte Ratio"] = 0
             features["Bwd Byte Ratio"] = 0
+            
+        # ===============================
+        # Packet Size Ratio Features
+        # ===============================
+
+        overall_avg = features["Average Packet Size"]
+
+        if overall_avg > 0:
+
+            features["Fwd Packet Size Ratio"] = (
+                features["Avg Fwd Segment Size"] /
+                overall_avg
+            )
+
+            features["Bwd Packet Size Ratio"] = (
+                features["Avg Bwd Segment Size"] /
+                overall_avg
+            )
+
+        else:
+
+            features["Fwd Packet Size Ratio"] = 0
+            features["Bwd Packet Size Ratio"] = 0
 
         # ===============================
         # Flow IAT Features
