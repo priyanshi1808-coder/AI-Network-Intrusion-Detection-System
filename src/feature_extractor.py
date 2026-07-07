@@ -1,4 +1,5 @@
 import statistics
+import numpy as np
 from scipy.stats import skew, kurtosis
 
 def calculate_iat(times):
@@ -306,7 +307,23 @@ class FeatureExtractor:
            )
         else:
             features["Packet Length CV"] = 0
-            
+        
+        
+        # ===============================
+        # Packet Length Quartiles
+        # ===============================
+
+        if len(packets) > 1:
+            features["Packet Length Q1"] = float(
+                np.percentile(packets, 25)
+           )
+
+            features["Packet Length Q3"] = float(
+                np.percentile(packets, 75)
+            )
+        else:
+            features["Packet Length Q1"] = 0
+            features["Packet Length Q3"] = 0   
             
         # ===============================
         # Flow Byte Ratio Features
