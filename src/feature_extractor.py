@@ -323,7 +323,16 @@ class FeatureExtractor:
             )
         else:
             features["Packet Length Q1"] = 0
-            features["Packet Length Q3"] = 0   
+            features["Packet Length Q3"] = 0
+            
+        # ===============================
+        # Packet Length Interquartile Range
+        # ===============================
+
+        features["Packet Length IQR"] = (
+            features["Packet Length Q3"] -
+            features["Packet Length Q1"]
+       ) 
             
         # ===============================
         # Flow Byte Ratio Features
