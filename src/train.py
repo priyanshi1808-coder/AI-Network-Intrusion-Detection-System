@@ -34,6 +34,13 @@ y = df["Label"]
 encoder = LabelEncoder()
 y = encoder.fit_transform(y)
 
+# Print label mapping
+print("\n===== Label Mapping =====")
+for i, label in enumerate(encoder.classes_):
+    print(f"{i} -> {label}")
+print("=========================\n")
+
+
 # Train Test Split
 X_train, X_test, y_train, y_test = train_test_split(
     X,

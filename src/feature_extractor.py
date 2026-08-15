@@ -224,20 +224,21 @@ class FeatureExtractor:
         # ===============================
         # Packet Length Skewness
         # ===============================
+        from scipy.stats import skew
 
-        if len(packets) > 2:
-            features["Packet Length Skewness"] = float(skew(packets))
+        if len(set(packets)) > 1:
+           features["Packet Length Skewness"] = float(skew(packets))
         else:
-            features["Packet Length Skewness"] = 0
+             features["Packet Length Skewness"] = 0
             
         # ===============================
         # Packet Length Kurtosis
         # ===============================
 
-        if len(packets) > 3:
-            features["Packet Length Kurtosis"] = float(
-               kurtosis(packets)
-            )
+        from scipy.stats import kurtosis
+
+        if len(set(packets)) > 1:
+            features["Packet Length Kurtosis"] = float(kurtosis(packets))
         else:
             features["Packet Length Kurtosis"] = 0
             

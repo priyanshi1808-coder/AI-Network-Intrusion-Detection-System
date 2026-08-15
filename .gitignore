@@ -1,3 +1,14 @@
+# Dataset
+data/cicids.csv
+
+# Generated logs
+logs/alerts.csv
+
+# Packet captures
+*.pcap
+*.pcapng
+pcaps/
+
 # Python
 __pycache__/
 *.py[cod]

@@ -11,6 +11,9 @@ class Flow:
         self.src_port = src_port
         self.dst_port = dst_port
         self.protocol = protocol
+        
+        # Add Other variablles
+        self.predicted = False
 
         # Time Information
         self.start_time = time.time()
@@ -118,24 +121,26 @@ class Flow:
             
 
         # TCP Flags
-        if tcp_flags:
+        if tcp_flags is not None:
+            flags = str(tcp_flags)
 
-            if "S" in tcp_flags:
+            if "S" in flags:
                 self.syn_count += 1
+                print(f"[DEBUG] SYN Count = {self.syn_count}")
 
-            if "A" in tcp_flags:
+            if "A" in flags:
                 self.ack_count += 1
 
-            if "F" in tcp_flags:
+            if "F" in flags:
                 self.fin_count += 1
 
-            if "R" in tcp_flags:
+            if "R" in flags:
                 self.rst_count += 1
 
-            if "P" in tcp_flags:
+            if "P" in flags:
                 self.psh_count += 1
 
-            if "U" in tcp_flags:
+            if "U" in flags:
                 self.urg_count += 1
 
     # ------------------------------------
